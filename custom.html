@@ -4,30 +4,99 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trianglify Basic Example</title>
-    <style>
-    html, body {
-      margin: 0 0;
-      padding: 0 0;
-      text-align: center;
-      font-size: 0;
-          }
+    <title>Triangle Generator</title>
 
-    svg, canvas {
-      padding: 0;
-    margin: auto;
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    }
+    <!-- Stylesheet -->
+    <style>
+      html, body, .row, .col, .container-fluid {
+        height: 100%;
+      }
+      body {
+        background-color: rgb(227,227,227) !important;
+      }
     </style>
+
+    <!-- Chroma -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.1/chroma.min.js" integrity="sha512-RWI59o+PDXjPl3bakOf3k2ZbDtfvn/OU/ZKe6QmkE0V/ve7vYKEJe0RdkDueS+VkghBazP+1o4LKGON+pHUa5g==" crossorigin="anonymous"></script>
+
+    <!-- Trianglify -->
     <script src='https://unpkg.com/trianglify@^4/dist/trianglify.bundle.js'></script>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
   </head>
+
   <body>
+
+    <div class="container-fluid">
+      <div class="row" style="height: 100%;">
+
+        <!-- Image preview area -->
+        <div id="mainWindow" class='col-lg-9 col-sm-8 col-6'>
+        </div>
+
+        <!-- Controls area -->
+        <div class='col-lg-3 col-sm-4 col-6'>
+          <br>
+
+          <!-- Description Card -->
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <h5 class="card-title">Triangle Generator</h5>
+              <p class="card-text">Similar to <a href="http://trianglify.io">triangliy.io</a> and created using the same <a href="https://github.com/qrohlf/trianglify">library</a>. However, the images generated here can be stitched together seamlessly in any arrangement.</p>
+              <button type="button" id="downloadBtn" class="btn btn-primary" onclick="saveImage()">Save as PNG</button>
+            </div>
+          </div>
+          <br>
+
+          <!-- Parameters Card -->
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <h5 class="card-title">Parameters</h5>
+
+              <!-- Jitter -->
+              <label id="jitterRangeLabel" for="jitterRange" class="form-label">Jitter Factor: 0.5</label>
+              <input type="range" class="form-range" min="0" max="1" step="0.01" id="jitterRange" onchange="updateJitter()">
+
+              <!-- Gradient -->
+              <label id="gradientFactorRangeLabel" for="gradientFactorRange" class="form-label">Gradient Factor: 4</label>
+              <input type="range" class="form-range" min="0" max="8" step="0.1" id="gradientFactorRange" onchange="updateGradientFactor()">
+
+              <!-- Cell Size -->
+              <label id="cellSizeRangeLabel" for="cellSizeRange" class="form-label">Cell Size: 20</label>
+              <input type="range" class="form-range" min="10" max="50" step="1" id="cellSizeRange" onchange="updateCellSize()">
+
+              <!-- Variance -->
+              <label id="varianceRangeLabel" for="varianceRange" class="form-label">Variance: 75</label>
+              <input type="range" class="form-range" min="0" max="1" step="0.01" id="varianceRange" value=0.75 onchange="updateVariance()">
+
+            </div>
+          </div>
+          <br>
+
+          <!-- Colour Picker Card -->
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <h5 class="card-title">Colours</h5>
+              <div id="colourPickers">
+                <input type="color" id="colour0" name="colour0" value="#9AC71B" onchange="updateColours()">
+                <input type="color" id="colour1" name="colour1" value="#B3A22A" onchange="updateColours()">
+                <input type="color" id="colour2" name="colour2" value="#189830" onchange="updateColours()">
+                <input type="color" id="colour3" name="colour3" value="#79581E" onchange="updateColours()">
+              </div>
+              <button type="button" class="btn btn-success btn-sm" onclick="addColour()">+</button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removeColour()">-</button>
+            </div>
+          </div>
+          <br>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Javascript logic -->
     <script src="trinfinite.js"></script>
+
   </body>
 </html>
